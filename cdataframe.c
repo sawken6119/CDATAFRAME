@@ -1273,3 +1273,17 @@ void replace_value(COLUMN* col, int row_index, int new_value)
     }
     col->Tab[row_index] = new_value;
 }
+
+void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes)
+{
+    if (CDataframe == NULL)
+    {
+        printf("Le DataFrame est NULL.\n");
+        return;
+    }
+    printf("Noms des colonnes :\n");
+    for (int i = 0; i < nombre_de_colonnes; ++i)
+        {
+            printf("%d. %s\n", i + 1, CDataframe[i]->title);
+        }
+}
