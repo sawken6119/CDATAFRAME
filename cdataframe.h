@@ -42,4 +42,6 @@ int value_exists_in_CDataframe(COLUMN** CDataframe, int nombre_de_colonnes, void
 
 size_t get_type_size(int type);
 
+void replace_value(COLUMN* col, int row_index, int new_value)
+
 #endif //CDATAFRAME_CDATAFRAME_H
