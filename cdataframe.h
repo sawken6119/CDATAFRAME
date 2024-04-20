@@ -46,4 +46,6 @@ void replace_value(COLUMN* col, int row_index, int new_value)
 
 void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes)
 
+int get_row_count(COLUMN* col)
+
 #endif //CDATAFRAME_CDATAFRAME_H
