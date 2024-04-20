@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "CDataframe.h"
-#define OUI 0
-#define NON 1
+
 
 int main()
 {
