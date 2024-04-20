@@ -1287,3 +1287,13 @@ void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes)
             printf("%d. %s\n", i + 1, CDataframe[i]->title);
         }
 }
+
+int get_row_count(COLUMN* col)
+{
+    if (col == NULL)
+        {
+            printf("Colonne non définie.\n");
+            return 0;
+        }
+        return col->t_log;
+}
