@@ -8,7 +8,7 @@ Membres de l'équipe
   
   Alexandre le GALLIARD
  
-  Tinwnende Kenanja SAWADOGO
+  Tinwende Kenanja SAWADOGO
 
 
 Dépendances
