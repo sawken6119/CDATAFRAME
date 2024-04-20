@@ -1,6 +1,6 @@
 -Projet CDataframe
 
--Membres de l'équipe
+-Membres de l'équipe :
   Tinwende Kenanja Sawadogo
   Alexandre le Galliard
 
@@ -10,5 +10,5 @@
     Git - Système de contrôle de version
     GitHub - Plateforme de gestion de projets et de collaboration
 
--Bugs Connus
+-Bugs Connus : 
   Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières)
