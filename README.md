@@ -1,6 +1,8 @@
 Projet CDataframe
 
-  Dans ce projet, nous allons implémenter une structure composée d’un système d’un ensemble appelée CDataframe. 
+
+Dans ce projet, nous allons implémenter une structure composée d’un système d’un ensemble appelée CDataframe. 
+
 
 Membres de l'équipe 
   
@@ -8,7 +10,8 @@ Membres de l'équipe
  
   Tinwnende Kenanja SAWADOGO
 
--Dépendances
+
+Dépendances
  
   Avant de commencer, assurez-vous d'installer les dépendances suivantes :
     
@@ -17,6 +20,7 @@ Membres de l'équipe
     Git - Système de contrôle de version
     
     GitHub - Plateforme de gestion de projets et de collaboration
+
 
 Bugs Connus 
 
