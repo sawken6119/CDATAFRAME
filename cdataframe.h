@@ -8,6 +8,7 @@
 #define REALOCSIZE 256
 #ifndef CDATAFRAME_CDATAFRAME_H
 #define CDATAFRAME_CDATAFRAME_H
+#include "column.h"
 int taille_logique_max;
 
 void remplissage_utilisateur(COLUMN **CDataframe, int nombre_de_colonnes);
