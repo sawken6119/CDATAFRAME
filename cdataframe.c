@@ -1297,3 +1297,62 @@ int get_row_count(COLUMN* col)
         }
         return col->t_log;
 }
+
+int get_column_count(int nombre_de_colonnes)
+{
+    return nombre_de_colonnes;
+}
+
+int get_row_count(COLUMN* col)
+{
+    if (col == NULL)
+    {
+        printf("Colonne non définie.\n");
+        return 0;
+    }
+    return col->t_log;
+}
+
+int get_row_coun(COLUMN* col)
+{
+    if (col == NULL)
+    {
+        printf("Colonne non définie.\n");
+        return 0;
+    }
+    return col->t_log;
+}
+
+int get_column_count(int nombre_de_colonnes)
+{
+    return nombre_de_colonnes;
+}
+
+int count_cells_equal_to(COLUMN** CDataframe, int nombre_de_colonnes, int x)
+{
+    int count = 0;
+    for (int i = 0; i < nombre_de_colonnes; ++i)
+    {
+    count += egales(x, CDataframe[i]);
+    }
+    return count;
+}
+int count_cells_greater_than(COLUMN** CDataframe, int nombre_de_colonnes, int x)
+{
+    int count = 0;
+    for (int i = 0; i < nombre_de_colonnes; ++i)
+        {
+            count += superieurs(x, CDataframe[i]);
+        }
+    return count;
+}
+
+int count_cells_less_than(COLUMN** CDataframe, int nombre_de_colonnes, int x)
+{
+    int count = 0;
+    for (int i = 0; i < nombre_de_colonnes; ++i)
+        {
+            count += inferieures(x, CDataframe[i]);
+        }
+    return count;
+}
