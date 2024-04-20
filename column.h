@@ -29,3 +29,19 @@ typedef struct {
 } COLUMN;
 
 COLUMN *create_column(char* title, DataType type);
+
+int insert_value(COLUMN* col, const void* value, int index);
+
+void delete_column(COLUMN **col);
+
+void print_col(COLUMN* col);
+
+int occurences(void* x, COLUMN *col);
+
+void * valeur_presente(int x, COLUMN *col);
+
+int superieurs(void* x, COLUMN *col);
+
+int inferieures(void* x, COLUMN *col);
+
+int egales(void* x, COLUMN *col);
