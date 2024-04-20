@@ -1,12 +1,12 @@
--Projet CDataframe
+Projet CDataframe
 
-Dans ce projet
+  Dans ce projet, nous allons implémenter une structure composée d’un système d’un ensemble appelée CDataframe. 
 
--Membres de l'équipe :
+Membres de l'équipe 
   
-  Tinwende Kenanja Sawadogo
+  Alexandre le GALLIARD
  
-  Alexandre le Galliard
+  Tinwnende Kenanja SAWADOGO
 
 -Dépendances
  
@@ -18,6 +18,6 @@ Dans ce projet
     
     GitHub - Plateforme de gestion de projets et de collaboration
 
--Bugs Connus : 
+-Bugs Connus 
 
-  Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières)
+  Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières), et nous avons eu des difficultés à comprendre les consignes donneés au début du projet
