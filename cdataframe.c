@@ -1263,3 +1263,13 @@ int value_exists_in_CDataframe(COLUMN** CDataframe, int nombre_de_colonnes, void
 
     return 0;  // La valeur n'existe pas dans le CDataframe
 }
+
+void replace_value(COLUMN* col, int row_index, int new_value)
+{
+    if (col == NULL || col->Tab == NULL || row_index < 0 || row_index >= col->t_log)
+    {
+        printf("Index de ligne invalide.\n");
+        return;
+    }
+    col->Tab[row_index] = new_value;
+}
