@@ -18,6 +18,6 @@ Membres de l'équipe
     
     GitHub - Plateforme de gestion de projets et de collaboration
 
--Bugs Connus 
+Bugs Connus 
 
   Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières), et nous avons eu des difficultés à comprendre les consignes donneés au début du projet
