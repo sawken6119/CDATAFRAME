@@ -42,10 +42,16 @@ int value_exists_in_CDataframe(COLUMN** CDataframe, int nombre_de_colonnes, void
 
 size_t get_type_size(int type);
 
-void replace_value(COLUMN* col, int row_index, int new_value)
+void replace_value(COLUMN* col, int row_index, int new_value);
 
-void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes)
+void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes);
 
-int get_row_count(COLUMN* col)
+int get_column_count(int nombre_de_colonnes);
+
+int count_cells_equal_to(COLUMN** CDataframe, int nombre_de_colonnes, int x);
+
+int count_cells_greater_than(COLUMN** CDataframe, int nombre_de_colonnes, int x);
+
+int count_cells_less_than(COLUMN** CDataframe, int nombre_de_colonnes, int x);
 
 #endif //CDATAFRAME_CDATAFRAME_H
