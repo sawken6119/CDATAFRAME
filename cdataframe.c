@@ -5,8 +5,357 @@
 #include <math.h>
 #include <time.h>
 #include "CDataframe.h"
+
 #define MAX_STRING_LENGTH 20 // Longueur maximale des chaînes de caractères générées
 int taille_logique_max;
+
+
+COLUMN* create_column(char* title, DataType type)
+{
+    COLUMN* new_column = malloc(sizeof(COLUMN));
+    new_column->title = title;
+    new_column->t_phy = 0;
+    new_column->t_log = 0;
+    new_column->Tab = NULL;
+    new_column->type = type;
+
+    return new_column;
+}
+
+int max_logical_size(COLUMN **CDataframe, int nombre_de_colonnes) {
+    size_t max_size = 0;
+
+    // Parcourir toutes les colonnes
+    for (int i = 0; i < nombre_de_colonnes; ++i) {
+        // Vérifier si la colonne est vide
+        if (CDataframe[i]->t_log == 0) {
+            return 0; // Si une colonne est vide, le DataFrame est vide
+        }
+
+        // Mettre à jour la taille logique maximale
+        if (CDataframe[i]->t_log > max_size) {
+            max_size = CDataframe[i]->t_log;
+        }
+    }
+
+    return max_size;
+}
+
+
+int insert_value(COLUMN* col, const void* value, int index)
+{
+    if (col == NULL)
+    {
+        return 0;
+    }
+
+    // Allouer de l'espace mémoire si nécessaire
+    if (col->t_log == col->t_phy || col->t_phy == 0)
+    {
+        int new_size = col->t_phy + REALOCSIZE;
+        void* new_data = realloc(col->Tab, new_size * get_type_size(col->type));
+        if (new_data == NULL)
+        {
+            return 0;
+        }
+        col->Tab = new_data;
+        col->t_phy = new_size;
+    }
+
+    // Copier la valeur dans la colonne
+    switch (col->type)
+    {
+        case INT:
+            ((int*)(col->Tab))[index] = *((int*)value);
+            break;
+        case FLOAT:
+            ((float*)(col->Tab))[index] = *((float*)value);
+            break;
+        case DOUBLE:
+            ((double*)(col->Tab))[index] = *((double*)value);
+            break;
+        case STRING:
+            ((char**)(col->Tab))[index] = strdup((char*)value);
+            break;
+        default:
+            return 0; // Type non pris en charge
+    }
+
+    ++col->t_log;
+    return 1;
+}
+
+
+void delete_column(COLUMN **col)
+{
+    if (col == NULL || *col == NULL)
+    {
+        return;
+    }
+    free((*col)->title);
+    free((*col)->Tab);
+    free(*col);
+    *col = NULL; // Assurer que le pointeur passé en argument est mis à NULL après la suppression
+}
+
+void print_col(COLUMN* col)
+{
+    if (col == NULL || col->Tab == NULL)
+    {
+        printf("La colonne est vide ou non définie.");
+        return;
+    }
+    switch (col->type)
+    {
+        case INT:
+            for (int i = 0; i < col->t_log; i++)
+            {
+                printf("[%d]: %d\n", i, ((int*)(col->Tab))[i]);
+            }
+            break;
+        case FLOAT:
+            for (int i = 0; i < col->t_log; i++)
+            {
+                printf("[%d]: %.2f\n", i, ((float*)(col->Tab))[i]);
+            }
+            break;
+        case DOUBLE:
+            for (int i = 0; i < col->t_log; i++)
+            {
+                printf("[%d]: %.2lf\n", i, ((double*)(col->Tab))[i]);
+            }
+            break;
+        default:
+            printf("Type de données non pris en charge.\n");
+            break;
+    }
+}
+
+int occurences(void* x, COLUMN *col)
+{
+    int occurence = 0;
+    if (col != NULL && col->Tab != NULL)
+    {
+        switch (col->type)
+        {
+            case INT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((int*)(col->Tab))[i] == *((int*)x))
+                    {
+                        ++occurence;
+                    }
+                }
+                break;
+            case FLOAT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((float*)(col->Tab))[i] == *((float*)x))
+                    {
+                        ++occurence;
+                    }
+                }
+                break;
+            case DOUBLE:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((double*)(col->Tab))[i] == *((double*)x))
+                    {
+                        ++occurence;
+                    }
+                }
+                break;
+            case STRING:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (strcmp(((char**)(col->Tab))[i], (char*)x) == 0)
+                    {
+                        ++occurence;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return occurence;
+}
+
+void *valeur_presente(int x, COLUMN *col)
+{
+    if (col != NULL && col->Tab != NULL)
+    {
+        switch (col->type)
+        {
+            case INT:
+                if (x >= 0 && x < col->t_log)
+                    return &(((int*)(col->Tab))[x]);
+                break;
+            case FLOAT:
+                if (x >= 0 && x < col->t_log)
+                    return &(((float*)(col->Tab))[x]);
+                break;
+            case DOUBLE:
+                if (x >= 0 && x < col->t_log)
+                    return &(((double*)(col->Tab))[x]);
+                break;
+            case STRING:
+                if (x >= 0 && x < col->t_log)
+                    return ((char**)(col->Tab))[x];
+                break;
+            default:
+                break;
+        }
+    }
+    return NULL; // Retourner NULL si la colonne est NULL, si le tableau est NULL ou si l'index est invalide
+}
+
+
+int superieurs(void* x, COLUMN *col)
+{
+    int nombre = 0;
+    if (col != NULL && col->Tab != NULL)
+    {
+        switch (col->type) {
+            case INT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((int*)(col->Tab))[i] > *((int*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case FLOAT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((float*)(col->Tab))[i] > *((float*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case DOUBLE:
+                for (int i = 0; i < col->t_log; ++i) {
+                    if (((double*)(col->Tab))[i] > *((double*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case STRING:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (strcmp(((char**)(col->Tab))[i], (char*)x) > 0)
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return nombre;
+}
+
+int inferieures(void* x, COLUMN *col)
+{
+    int nombre = 0;
+    if (col != NULL && col->Tab != NULL)
+    {
+        switch (col->type) {
+            case INT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((int*)(col->Tab))[i] < *((int*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case FLOAT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((float*)(col->Tab))[i] < *((float*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case DOUBLE:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((double*)(col->Tab))[i] < *((double*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case STRING:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (strcmp(((char**)(col->Tab))[i], (char*)x) < 0)
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return nombre;
+}
+
+int egales(void* x, COLUMN *col)
+{
+    int nombre = 0;
+    if (col != NULL && col->Tab != NULL)
+    {
+        switch (col->type) {
+            case INT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((int*)(col->Tab))[i] == *((int*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case FLOAT:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((float*)(col->Tab))[i] == *((float*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case DOUBLE:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (((double*)(col->Tab))[i] == *((double*)x))
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            case STRING:
+                for (int i = 0; i < col->t_log; ++i)
+                {
+                    if (strcmp(((char**)(col->Tab))[i], (char*)x) == 0)
+                    {
+                        ++nombre;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return nombre;
+}
 
 void fill_empty_cells(COLUMN** CDataframe, int nombre_de_colonnes)
 {
@@ -916,99 +1265,6 @@ int value_exists_in_CDataframe(COLUMN** CDataframe, int nombre_de_colonnes, void
     return 0;  // La valeur n'existe pas dans le CDataframe
 }
 
-void replace_value(COLUMN* col, int row_index, int new_value)
-{
-    if (col == NULL || col->Tab == NULL || row_index < 0 || row_index >= col->t_log)
-    {
-        printf("Index de ligne invalide.\n");
-        return;
-    }
-    col->Tab[row_index] = new_value;
-}
-
-void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes)
-{
-    if (CDataframe == NULL)
-    {
-        printf("Le DataFrame est NULL.\n");
-        return;
-    }
-    printf("Noms des colonnes :\n");
-    for (int i = 0; i < nombre_de_colonnes; ++i)
-        {
-            printf("%d. %s\n", i + 1, CDataframe[i]->title);
-        }
-}
-
-int get_row_count(COLUMN* col)
-{
-    if (col == NULL)
-        {
-            printf("Colonne non définie.\n");
-            return 0;
-        }
-        return col->t_log;
-}
-
-int get_column_count(int nombre_de_colonnes)
-{
-    return nombre_de_colonnes;
-}
-
-int get_row_count(COLUMN* col)
-{
-    if (col == NULL)
-    {
-        printf("Colonne non définie.\n");
-        return 0;
-    }
-    return col->t_log;
-}
-
-int get_row_coun(COLUMN* col)
-{
-    if (col == NULL)
-    {
-        printf("Colonne non définie.\n");
-        return 0;
-    }
-    return col->t_log;
-}
-
-int get_column_count(int nombre_de_colonnes)
-{
-    return nombre_de_colonnes;
-}
-
-int count_cells_equal_to(COLUMN** CDataframe, int nombre_de_colonnes, int x)
-{
-    int count = 0;
-    for (int i = 0; i < nombre_de_colonnes; ++i)
-    {
-    count += egales(x, CDataframe[i]);
-    }
-    return count;
-}
-int count_cells_greater_than(COLUMN** CDataframe, int nombre_de_colonnes, int x)
-{
-    int count = 0;
-    for (int i = 0; i < nombre_de_colonnes; ++i)
-        {
-            count += superieurs(x, CDataframe[i]);
-        }
-    return count;
-}
-
-int count_cells_less_than(COLUMN** CDataframe, int nombre_de_colonnes, int x)
-{
-    int count = 0;
-    for (int i = 0; i < nombre_de_colonnes; ++i)
-        {
-            count += inferieures(x, CDataframe[i]);
-        }
-    return count;
-}
-
 size_t get_type_size(int type)
 {
     switch (type)
@@ -1026,3 +1282,4 @@ size_t get_type_size(int type)
             return 0; // Type non pris en charge
     }
 }
+
