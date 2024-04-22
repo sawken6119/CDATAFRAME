@@ -1008,3 +1008,21 @@ int count_cells_less_than(COLUMN** CDataframe, int nombre_de_colonnes, int x)
         }
     return count;
 }
+
+size_t get_type_size(int type)
+{
+    switch (type)
+    {
+        case INT:
+            return sizeof(int);
+        case FLOAT:
+            return sizeof(float);
+        case DOUBLE:
+            return sizeof(double);
+        case STRING:
+            return sizeof(char*);
+            // Ajoutez d'autres types si nécessaire
+        default:
+            return 0; // Type non pris en charge
+    }
+}
