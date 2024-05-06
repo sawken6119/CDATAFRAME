@@ -1,49 +1,51 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-#include <float.h>
-#include <limits.h>
-#define REALOCSIZE 256
-#ifndef CDATAFRAME_CDATAFRAME_H
-#define CDATAFRAME_CDATAFRAME_H
-int taille_logique_max;
+#ifndef C_DATA_FRAME_COLUMN_H
+#define C_DATA_FRAME_COLUMN_H
 
 
-// Définir une énumération pour représenter les différents types de données
-typedef enum {
-    INT,
-    FLOAT,
-    DOUBLE,
-    STRING,
-} DataType;
+//Structure de la colonne
+typedef struct
+{
+    char titre[100]; // titre
+    int TL;  // taille logique
+    int TP; // taille physique
+    int *donne; // Tableau des données ou valeurs
+}Column;
 
-// Structure pour représenter une colonne du DataFrame
-typedef struct {
-    char* title;
-    int t_phy;
-    int t_log;
-    void* Tab; // Pointeur générique vers les données
-    DataType type; // Type de données de la colonne
-} COLUMN;
+Column *create_column(char *title);
+int insert_value(Column* col, int value);
+void delete_column(Column **col);
+void print_col(Column* col);
+void nb_occurences(Column* col, int value);
+void value_present(Column* col, int x);
+void value_sup(Column* col, int value);
+void value_inf(Column* col, int value);
+void value_egal(Column* col, int value);
 
-COLUMN *create_column(char* title, DataType type);
-
-int insert_value(COLUMN* col, const void* value, int index);
-
-void delete_column(COLUMN **col);
-
-void print_col(COLUMN* col);
-
-int occurences(void* x, COLUMN *col);
-
-void * valeur_presente(int x, COLUMN *col);
-
-int superieurs(void* x, COLUMN *col);
-
-int inferieures(void* x, COLUMN *col);
-
-int egales(void* x, COLUMN *col);
-
-
+//Cdata
+typedef struct
+{
+    int nb_colone;
+    Column **col;
+}Cdataframe;
+Cdataframe *create_cdataframe();
+void inser_value(Cdataframe *df, Column* col);
+void remplir_col(Column *col);
+void remplir_Cdata(Cdataframe *df);
+void remplir_Cdata_dur(Cdataframe *df);
+void afficher_Cdata(Cdataframe *df);
+void affiche_partie_ligne(Cdataframe *df,int arret);
+void affiche_partie_col(Cdataframe *df,int arret);
+void ajout_ligne(Cdataframe *df,int *value);
+void del_ligne(Cdataframe *df,int choix);
+void ajout_colonne(Cdataframe *df, char *titre);
+void del_col(Cdataframe *df, int choix);
+void renommer_colonne(Cdataframe *df, int choix, char *nouveau_titre);
+int valeur_existante(Cdataframe *df, int value);
+void acces_valeur_cellule(Cdataframe *df, int choix_ligne, int choix_colonne, int new_value);
+void afficher_noms_colonnes(Cdataframe *df);
+int nb_ligne(Cdataframe *df);
+int nb_col(Cdataframe *df);
+int nb_egal(Cdataframe *df, int value);
+int nb_sup(Cdataframe *df, int value);
+int nb_inf(Cdataframe *df, int value);
+#endif //C_DATA_FRAME_COLUMN_H
