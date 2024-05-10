@@ -132,15 +132,15 @@ void inser_value(Cdataframe *df, Column* col)
 void remplir_col(Column *col)
 {
     int value;
-    do
+    while (value >= 0 )
     {
-        printf("Saisir une valeur (ou -1 pour la saisie) : ");
+        printf("Saisir une valeur : ");
         scanf("%d", &value);
-        if (value != -1)
+        if (value >= 0)
         {
             if (col->TL >= col->TP)
             {
-                col->TP += REALOC_SIZE; // Correction ici
+                col->TP += REALOC_SIZE;
                 col->donne = (int *)realloc(col->donne, col->TP * sizeof(int));
                 if (col->donne == NULL)
                 {
@@ -149,8 +149,7 @@ void remplir_col(Column *col)
             }
             col->donne[col->TL++] = value;
         }
-
-    } while (value != -1);
+    }
 }
 
 void remplir_Cdata(Cdataframe *df)
