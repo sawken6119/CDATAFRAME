@@ -166,65 +166,49 @@ void remplir_Cdata_dur(Cdataframe *df)
     remplir_Cdata(col1);
     remplir_Cdata(col2);
 }
-void afficher_Cdata(Cdataframe *df)
-{
+void afficher_Cdata(Cdataframe *df) {
     printf("Contenu du Cdataframe : \n");
 
-    // Détermination de la longueur maximale des titres de colonnes
-    int maxLength = 0;
-    for (int i = 0; i < df->nb_colone; i++)
-    {
-        int length = strlen(df->col[i]->titre);
-        if (length > maxLength)
-        {
-            maxLength = length;
+    // Détermination de la largeur maximale pour chaque colonne
+    int *colWidths = malloc(df->nb_colone * sizeof(int));
+    for (int i = 0; i < df->nb_colone; i++) {
+        int maxLength = strlen(df->col[i]->titre);
+        for (int j = 0; j < df->col[i]->TL; j++) {
+            int length = snprintf(NULL, 0, "%d", df->col[i]->donne[j]);
+            if (length > maxLength) {
+                maxLength = length;
+            }
         }
+        colWidths[i] = maxLength;
     }
 
     // Affichage des titres de colonnes
-    for (int i = 0; i < df->nb_colone; i++)
-    {
-        printf("%-*s     ", maxLength, df->col[i]->titre); // Utilisation de la largeur maximale pour l'alignement
-    }
-    printf("   \n   ");
-
-    // Affichage des valeurs alignées sous les titres de colonnes
-    for (int i = 0; i < df->nb_colone; i++)
-    {
-        for (int j = 0; j < maxLength; j++)
-        {
-            printf(" ");
-        }
-        printf(" "); // Espace entre le titre et les valeurs
+    for (int i = 0; i < df->nb_colone; i++) {
+        printf("%-*s ", colWidths[i], df->col[i]->titre);
     }
     printf("\n");
 
     // Trouver le nombre maximal de lignes parmi toutes les colonnes
     int maxLignes = 0;
-    for (int i = 0; i < df->nb_colone; i++)
-    {
-        if (df->col[i]->TL > maxLignes)
-        {
+    for (int i = 0; i < df->nb_colone; i++) {
+        if (df->col[i]->TL > maxLignes) {
             maxLignes = df->col[i]->TL;
         }
     }
 
     // Affichage des valeurs des colonnes
-    for (int j = 0; j < maxLignes; j++)
-    {
-        for (int i = 0; i < df->nb_colone; i++)
-        {
-            if (j < df->col[i]->TL)
-            {
-                printf("   %-*d", maxLength, df->col[i]->donne[j]); // Utilisation de la largeur maximale pour l'alignement
-            }
-            else
-            {
-                printf("%-*s ", maxLength, ""); // Affiche un espace pour les cellules manquantes
+    for (int j = 0; j < maxLignes; j++) {
+        for (int i = 0; i < df->nb_colone; i++) {
+            if (j < df->col[i]->TL) {
+                printf("%-*d ", colWidths[i], df->col[i]->donne[j]);
+            } else {
+                printf("%-*s ", colWidths[i], "");
             }
         }
         printf("\n");
     }
+
+    free(colWidths);
 }
 void affiche_partie_ligne(Cdataframe *df,int arret)
 {
