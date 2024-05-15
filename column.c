@@ -182,9 +182,30 @@ void afficher_Cdata(Cdataframe *df) {
         colWidths[i] = maxLength;
     }
 
-    // Affichage des titres de colonnes
+    // Affichage de la ligne supérieure
+    printf("+");
     for (int i = 0; i < df->nb_colone; i++) {
-        printf("%-*s ", colWidths[i], df->col[i]->titre);
+        for (int k = 0; k < colWidths[i] + 2; k++) {
+            printf("-");
+        }
+        printf("+");
+    }
+    printf("\n");
+
+    // Affichage des titres de colonnes
+    printf("|");
+    for (int i = 0; i < df->nb_colone; i++) {
+        printf(" %-*s |", colWidths[i], df->col[i]->titre);
+    }
+    printf("\n");
+
+    // Affichage de la ligne de séparation entre les titres et les valeurs
+    printf("+");
+    for (int i = 0; i < df->nb_colone; i++) {
+        for (int k = 0; k < colWidths[i] + 2; k++) {
+            printf("-");
+        }
+        printf("+");
     }
     printf("\n");
 
@@ -198,15 +219,26 @@ void afficher_Cdata(Cdataframe *df) {
 
     // Affichage des valeurs des colonnes
     for (int j = 0; j < maxLignes; j++) {
+        printf("|");
         for (int i = 0; i < df->nb_colone; i++) {
             if (j < df->col[i]->TL) {
-                printf("%-*d ", colWidths[i], df->col[i]->donne[j]);
+                printf(" %-*d |", colWidths[i], df->col[i]->donne[j]);
             } else {
-                printf("%-*s ", colWidths[i], "");
+                printf(" %-*s |", colWidths[i], "");
             }
         }
         printf("\n");
     }
+
+    // Affichage de la ligne inférieure
+    printf("+");
+    for (int i = 0; i < df->nb_colone; i++) {
+        for (int k = 0; k < colWidths[i] + 2; k++) {
+            printf("-");
+        }
+        printf("+");
+    }
+    printf("\n");
 
     free(colWidths);
 }
