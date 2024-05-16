@@ -2,51 +2,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
-#include <float.h>
-#include <limits.h>
 #define REALOCSIZE 256
 #ifndef CDATAFRAME_CDATAFRAME_H
 #define CDATAFRAME_CDATAFRAME_H
 #include "column.h"
-int taille_logique_max;
+//Cdata
+typedef struct
+{
+    int nb_colone;
+    Column **col;
+}Cdataframe;
+Cdataframe *create_cdataframe();
+void inser_value(Cdataframe *df, Column* col);
+void remplir_col(Column *col);
+void remplir_Cdata(Cdataframe *df);
+void remplir_Cdata_dur(Cdataframe *df);
+void afficher_Cdata(Cdataframe *df);
+void affiche_partie_ligne(Cdataframe *df,int arret);
+void affiche_partie_col(Cdataframe *df,int arret);
+void ajout_ligne(Cdataframe *df,int *value);
+void del_ligne(Cdataframe *df,int choix);
+void ajout_colonne(Cdataframe *df, char *titre);
+void del_col(Cdataframe *df, int choix);
+void renommer_colonne(Cdataframe *df, int choix, char *nouveau_titre);
+int valeur_existante(Cdataframe *df, int value);
+void acces_valeur_cellule(Cdataframe *df, int choix_ligne, int choix_colonne, int new_value);
+void afficher_noms_colonnes(Cdataframe *df);
+int nb_ligne(Cdataframe *df);
+int nb_col(Cdataframe *df);
+int nb_egal(Cdataframe *df, int value);
+int nb_sup(Cdataframe *df, int value);
+int nb_inf(Cdataframe *df, int value);
+#endif //C_DATA_FRAME_COLUMN_H
 
-void remplissage_utilisateur(COLUMN **CDataframe, int nombre_de_colonnes);
-
-void remplissage_dur(COLUMN **CDataframe, int nombre_de_colonnes);
-
-void print_DataFrame(COLUMN **CDataframe, int nombre_de_colonnes);
-
-void print_partial_row_data(COLUMN** CDataframe, int nombre_de_colonnes, int start_index, int end_index);
-
-void print_partial_column_data(COLUMN **CDataframe, int nombre_de_colonnes, int start_index, int end_index);
-
-void add_row(COLUMN** CDataframe, int nombre_de_colonnes, void** values);
-
-void delete_row(COLUMN** CDataframe, int nombre_de_colonnes, int index);
-
-void add_column(COLUMN*** CDataframe, int* nombre_de_colonnes, char* title, int type, void* values, int size);
-
-void delete_column_CDataframe(COLUMN*** CDataframe, int* nombre_de_colonnes, int index);
-
-void rename_column(COLUMN** CDataframe, int nombre_de_colonnes, int index, char* new_title);
-
-int value_exists_in_column(COLUMN* column, void* value);
-
-int value_exists_in_CDataframe(COLUMN** CDataframe, int nombre_de_colonnes, void* value);
-
-size_t get_type_size(int type);
-
-void replace_value(COLUMN* col, int row_index, int new_value);
-
-void print_column_names(COLUMN** CDataframe, int nombre_de_colonnes);
-
-int get_column_count(int nombre_de_colonnes);
-
-int count_cells_equal_to(COLUMN** CDataframe, int nombre_de_colonnes, int x);
-
-int count_cells_greater_than(COLUMN** CDataframe, int nombre_de_colonnes, int x);
-
-int count_cells_less_than(COLUMN** CDataframe, int nombre_de_colonnes, int x);
 
 #endif //CDATAFRAME_CDATAFRAME_H
