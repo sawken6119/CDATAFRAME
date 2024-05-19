@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdlib.h>
-#define REALOCSIZE 256
-#ifndef CDATAFRAME_CDATAFRAME_H
-#define CDATAFRAME_CDATAFRAME_H
+#ifndef CDATAFRAM_E_CDATA_H
+#define CDATAFRAM_E_CDATA_H
 #include "column.h"
 //Cdata
 typedef struct
@@ -12,6 +7,7 @@ typedef struct
     int nb_colone;
     Column **col;
 }Cdataframe;
+
 Cdataframe *create_cdataframe();
 void inser_value(Cdataframe *df, Column* col);
 void remplir_col(Column *col);
@@ -33,7 +29,5 @@ int nb_col(Cdataframe *df);
 int nb_egal(Cdataframe *df, int value);
 int nb_sup(Cdataframe *df, int value);
 int nb_inf(Cdataframe *df, int value);
-#endif //C_DATA_FRAME_COLUMN_H
 
-
-#endif //CDATAFRAME_CDATAFRAME_H
+#endif //CDATAFRAM_E_CDATA_H
