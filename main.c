@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "column.h"
+#include "CDATA.h"
 #define REALOC_SIZE 256
 
 
