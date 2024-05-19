@@ -1,7 +1,7 @@
                                                             Projet CDataframe
 
 
-Dans ce projet, nous allons implémenter une structure composée d’un système d’un ensemble appelée CDataframe. 
+Ce projet consiste à créer une structure de données appelée CDataframe, composée de colonnes avec des titres et des valeurs de même type, formant une matrice. Les fonctionnalités incluent la création, le remplissage, l'affichage, la modification (ajout/suppression de lignes et colonnes, renommage), la recherche de valeurs, et des analyses statistiques de base comme le comptage de lignes/colonnes et des valeurs spécifiques.
 
 
 Membres de l'équipe 
