@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CDataframe.h"
-
+#include "column.h"
+#include "CDATA.h"
+#define REALOC_SIZE 256
 //Cdata
 Cdataframe *create_cdataframe()
 {
@@ -45,6 +46,7 @@ void remplir_col(Column *col)
             }
             col->donne[col->TL++] = value;
         }
+
     }
 }
 
@@ -154,7 +156,7 @@ void affiche_partie_ligne(Cdataframe *df,int arret)
 }
 void affiche_partie_col(Cdataframe *df,int arret)
 {
-    printf("Affichage d'une partie des colonnes de Cdataframe(limite : %d",arret);
+    printf("Affichage d'une partie des colonnes de Cdataframe(limite : %d)",arret);
     for (int i = 0; i< df->nb_colone && i< arret ;i++)
     {
         printf("Colonne '%s : \n",df->col[i]->titre);
