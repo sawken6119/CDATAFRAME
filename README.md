@@ -24,4 +24,4 @@ Dépendances
 
 Bugs Connus 
 
-  Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières), et nous avons eu des difficultés à comprendre les consignes donneés au début du projet
+  Nous avons rencontré des difficultés à créer les fonctions(notamment les 7 dernières), et nous avons eu des difficultés à comprendre les consignes données au début du projet
