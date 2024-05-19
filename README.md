@@ -5,10 +5,10 @@ Dans ce projet, nous allons implémenter une structure composée d’un système
 
 
 Membres de l'équipe 
+
+      Alexandre le GALLIARD
   
-  Alexandre le GALLIARD
- 
-  Tinwende Kenanja SAWADOGO
+      Tinwende Kenanja SAWADOGO
 
 
 Dépendances
@@ -38,4 +38,6 @@ Dépendances
          -CDATA.c : fichier source contenant les définitions des fonctions
          
 En allant sue le lien github ci-dessous, vous verrez les fichiers corresponds à leur fichier correspondants et vous pourrez ainsi copiez et coller les fonctions dans leur fichier respectif sur CLion.
+
+https://github.com/sawken6119/CDATAFRAME/tree/main
 
