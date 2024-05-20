@@ -37,7 +37,7 @@ Dépendances
          
          -CDATA.c : fichier source contenant les définitions des fonctions
          
-En allant sue le lien github ci-dessous, vous verrez les fichiers corresponds à leur fichier correspondants et vous pourrez ainsi copiez et coller les fonctions dans leur fichier respectif sur CLion.
+En allant sue le lien Github ci-dessous, vous verrez les fichiers corresponds à leur fichier correspondants et vous pourrez ainsi copiez et coller les fonctions dans leur fichier respectif sur CLion.
 
 https://github.com/sawken6119/CDATAFRAME/tree/main
 
